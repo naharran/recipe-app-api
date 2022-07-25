@@ -8,16 +8,17 @@ COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./app /app
 WORKDIR /app
 EXPOSE 8000
-ARG dev=false
+
+ARG DEV=false
 RUN python -m venv /py && \
-    /py/bin/pip install --upgrade pip &&\
-    /py/bin/pip install -r /tmp/requirements.txt &&\
-    if [$DEV="true" ]; \
-        then /py/bin/pip install -r /tmp/requirements.dev.txt;\
-         fi && \
+    /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install -r /tmp/requirements.txt && \
+    if [$DEV="true"]; \
+    then /py/bin/pip install -r /tmp/requirements.dev.txt;\
+    fi && \
     rm -rf /tmp &&\
     adduser \ 
-        --disable-password \
+        -D \
         --no-create-home \
         django-user 
 
